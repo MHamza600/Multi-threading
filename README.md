@@ -1,8 +1,8 @@
 # ekar-assignment
-#Application Java version
+# Application Java version
 I am using JDK11 and MYSQL version 8.0.3
 
-#how to run the project
+# how to run the project
 Create a database counter in the localhost
 Add application as a maven project in the IDE(Eclipse OR IntelliJ)
 Run the application
