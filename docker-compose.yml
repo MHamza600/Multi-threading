@@ -1,37 +1,29 @@
-version: '3.7'
+version: '3'
+
+networks:
+  springboot-mysql-net:
+    driver: bridge      
 
 services:
-
-  mysqldb:
-    image: mysql:latest
-    restart: always
+  mysql-docker-container:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=counter
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=12345
     ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: counter
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 12345
-      MYSQL_ROOT_PASSWORD: 12345
+      - 3307:3306
     networks:
-      - ekar-network
-
-  backend:
-    image: ekar-latest
-    depends_on:
-      - mysqldb
-    environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/counter?serverTimezone=UTC"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "12345"
-      SPRING_JPA_HIBERNATE_DDL-AUTO: "update"
+      - springboot-mysql-net  
       
+  spring-boot-container:
+    image: ekar-latest:latest
     ports:
-      - "8081:8081"
-    restart: always
+      - 8080:8080
     networks:
-      - ekar-network
-
-#Docker Networks
-networks:
-  ekar-network:
-    driver: bridge
+      - springboot-mysql-net    
+    depends_on:
+      - mysql-docker-container
+      
+      
