@@ -1,21 +1,21 @@
 package com.ekar.assignment.threads;
 
+
 import com.ekar.assignment.service.CounterService;
 
-import lombok.Synchronized;
+public class ConsumerThread extends Thread {
+	
 
-public class ConsumerThread implements Runnable {
-
-	private CounterService counterservice;
-
-	public ConsumerThread(CounterService counterservice) {
-		this.counterservice = counterservice;
+	private CounterService countService;
+	
+	public ConsumerThread(CounterService counterServiceParam) {	
+	this.countService = counterServiceParam;
 	}
-
+	
 	@Override
 	public void run() {
 		try {
-			counterservice.decreaseCounter();
+			countService.decreaseCounter();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

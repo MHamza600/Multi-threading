@@ -2,20 +2,19 @@ package com.ekar.assignment.threads;
 
 import com.ekar.assignment.service.CounterService;
 
-public class ProducerThread implements Runnable {
+public class ProducerThread extends Thread {
 
-	CounterService counterservice;
+	private CounterService countService;
 
-	public ProducerThread(CounterService counterService) {
-		this.counterservice = counterService;
-
+	public ProducerThread(CounterService counterServiceParam) {
+		this.countService = counterServiceParam;
 	}
 
 	@Override
 	public void run() {
 
 		try {
-			counterservice.increaseCounter();
+			countService.increaseCounter();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

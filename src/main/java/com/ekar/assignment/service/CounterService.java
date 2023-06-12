@@ -1,13 +1,10 @@
 package com.ekar.assignment.service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ekar.assignment.dataservices.CounterDeatailsDataService;
@@ -21,10 +18,6 @@ public class CounterService {
 	private volatile int counter = 50;
 	private static final Object lock = new Object();
 	Logger logger = LoggerFactory.getLogger("Counter Service");
-
-	@Qualifier("threadExecutor")
-	@Autowired
-	ExecutorService threadExecutor;
 
 	@Autowired
 	CounterDeatailsDataService dataService;
@@ -59,6 +52,7 @@ public class CounterService {
 	public void setCounter(int counterValue) {
 		synchronized (lock) {
 			counter = counterValue;
+			logger.info("Counter Has been reset to count: "+ counter);
 		}
 	}
 
@@ -76,10 +70,8 @@ public class CounterService {
 	}
 
 	private void performActionOnLimitReached(String type) throws InterruptedException {
-		logger.info("Limit Reached");
+		logger.info("Limit Reached By "+ Thread.currentThread().getName()+ " Saving Data in to DB");
 		dataService.logRequestIntoDB(type + "_" + Thread.currentThread().getName(), counter);
-		if(!threadExecutor.isShutdown())
-		threadExecutor.shutdown();
 	}
 
 }
