@@ -1,4 +1,5 @@
 # ekar-assignment
+# 1.0.0
 # Application Java version
 I am using JDK11 and MYSQL version 8.0.3
 
@@ -9,3 +10,7 @@ Run the application
 
 # Working 
 I am using the executors for thread services and runnable for the thread functionality
+
+# 1.0.1
+# Working 
+I have removed the executor functionality and starting the producer and consumer threads in parallel 
