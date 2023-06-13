@@ -19,13 +19,13 @@ public class ThreadService {
 	public void setCounter(Integer counter) throws InterruptedException {
 		counterService.setCounter(counter);
 	}
-
+	
 	private void addConsumerAndProducer(Integer consumer, Integer producer) throws InterruptedException {
 		int consumerCount = 0;
 		int producerCount = 0;
 		while (true) {
 			if (consumerCount < consumer && !counterService.isLimitReachedBlocked()) {
-				ConsumerThread consumerThread = new ConsumerThread(counterService );
+				ConsumerThread consumerThread = new ConsumerThread(counterService);
 				consumerThread.start();
 				consumerCount++;
 			}
@@ -34,9 +34,9 @@ public class ThreadService {
 				producerThread.start();
 				producerCount++;
 			}
-			if((producerCount>=producer && consumerCount>=consumer) || counterService.isLimitReachedBlocked())
+			
+			if ((producerCount >= producer && consumerCount >= consumer) || counterService.isLimitReachedBlocked())
 				break;
-				
 		}
 	}
 
