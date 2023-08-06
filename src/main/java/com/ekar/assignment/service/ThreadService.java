@@ -12,11 +12,15 @@ public class ThreadService {
 	@Autowired
 	CounterService counterService;
 
-	public void performAction(Integer consumer, Integer producer) throws InterruptedException {
-		addConsumerAndProducer(consumer, producer);
+	public void performAction(Integer consumer, Integer producer) {
+		try {
+			addConsumerAndProducer(consumer, producer);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void setCounter(Integer counter) throws InterruptedException {
+	public void setCounter(Integer counter) {
 		counterService.setCounter(counter);
 	}
 	

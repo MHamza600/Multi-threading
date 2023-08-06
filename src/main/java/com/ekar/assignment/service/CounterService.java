@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ekar.assignment.Exception.CustomException;
 import com.ekar.assignment.dataservices.CounterDeatailsDataService;
 
 import lombok.Data;
@@ -22,27 +23,27 @@ public class CounterService {
 	@Autowired
 	CounterDeatailsDataService dataService;
 
-	public void decreaseCounter() throws InterruptedException {
+	public void decreaseCounter(){
 		synchronized (lock) {
 			if (!isLimitReached()) {
 				counter--;
 				logger.info("Consumer Decreased the counter with name:" + Thread.currentThread().getName() + " : "
 						+ counter);
 				if (isLimitReached()) {
-					performActionOnLimitReached("Consumer");
+						performActionOnLimitReached("Consumer");
 				}
 			}
 		}
 	}
 
-	public void increaseCounter() throws InterruptedException {
+	public void increaseCounter(){
 		synchronized (lock) {
 			if (!isLimitReached()) {
 				counter++;
 				logger.info("Producer Increased the counter with name:" + Thread.currentThread().getName() + " : "
 						+ counter);
 				if (isLimitReached()) {
-					performActionOnLimitReached("Producer");
+						performActionOnLimitReached("Producer");
 				}
 			}
 		}
@@ -69,7 +70,7 @@ public class CounterService {
 		}
 	}
 
-	private void performActionOnLimitReached(String type) throws InterruptedException {
+	private void performActionOnLimitReached(String type) {
 		logger.info("Limit Reached By "+ Thread.currentThread().getName()+ " Saving Data in to DB");
 		dataService.logRequestIntoDB(type + "_" + Thread.currentThread().getName(), counter);
 	}

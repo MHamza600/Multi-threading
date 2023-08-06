@@ -7,7 +7,7 @@ import com.ekar.assignment.service.CounterService;
 public class ProducerThread extends Thread {
 
 	private CounterService countService;
-	
+
 	Random rand = new Random();
 
 	public ProducerThread(CounterService counterServiceParam) {
@@ -24,7 +24,6 @@ public class ProducerThread extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }
